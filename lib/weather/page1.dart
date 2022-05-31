@@ -3,6 +3,9 @@ import 'package:geolocator/geolocator.dart';
 
 var position;
 var lastPosition;
+var userpost = 'hello';
+
+// ignore: prefer_typing_uninitialized_variables
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -19,12 +22,14 @@ class _MyLoginState extends State<MyLogin> {
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     lastPosition = await Geolocator.getLastKnownPosition();
-    print(lastPosition);
+    print(position);
 
     setState(() {
       locationMessage = "${position.latitude} , ${position.longitude}";
     });
   }
+
+  final _textcontroller = TextEditingController();
 
 //bool _
   @override
@@ -62,6 +67,40 @@ class _MyLoginState extends State<MyLogin> {
                       margin: EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
+                          TextField(
+                            controller: _textcontroller,
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              fillColor: Colors.transparent,
+                              filled: true,
+                              hintText: "search location",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  _textcontroller.clear();
+                                },
+                                icon: const Icon(Icons.clear),
+                              ),
+                            ),
+                          ),
+                          MaterialButton(
+                            onPressed: () {
+                              setState(() {
+                                userpost = _textcontroller.text;
+                              });
+                              print('${_textcontroller.text},  ${userpost}');
+                            },
+                            color: Colors.black,
+                            child: const Text(
+                              'Done',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           ElevatedButton(
                               onPressed: getLocation,
                               child: Icon(
