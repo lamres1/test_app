@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/weather/model.dart';
 import 'package:test_app/weather/page1.dart';
-
 import 'package:test_app/weather/page3.dart';
 
 class MyRegister extends StatefulWidget {
@@ -16,8 +15,14 @@ class _MyRegisterState extends State<MyRegister> {
   Weather? data;
 
   Future<void> getData() async {
-    data = await client.getCurrentWeather(
-        "${position.latitude}", "${position.longitude}");
+    print(userpost);
+    print("hello");
+    if (userpost != 'hello') {
+      data = await client.getCurrentWeather(userpost, "hi");
+    } else {
+      data = await client.getCurrentWeather(
+          "${position.latitude}", "${position.longitude}");
+    }
   }
 
   @override
@@ -39,7 +44,7 @@ class _MyRegisterState extends State<MyRegister> {
             Container(
               padding: EdgeInsets.only(left: 35, top: 30),
               child: Text(
-                'Current\nWeather ',
+                'Current\nWeather',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 43,
@@ -74,14 +79,14 @@ class _MyRegisterState extends State<MyRegister> {
                                   ),
                                   Text('City : ${data!.cityName} ',
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 30.0,
                                         fontWeight: FontWeight.bold,
                                         color:
                                             Color.fromARGB(255, 197, 233, 224),
                                       )),
                                   Text(
-                                    'Temp  : ${data!.temp} K',
+                                    'Temp  : ${data!.temp} C',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 30.0,
@@ -90,7 +95,7 @@ class _MyRegisterState extends State<MyRegister> {
                                             Color.fromARGB(255, 195, 230, 221)),
                                   ),
                                   Text(
-                                    'feels_like : ${data!.feels_like} K',
+                                    'feels_like : ${data!.feels_like} C',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 20.0,
@@ -121,4 +126,3 @@ class _MyRegisterState extends State<MyRegister> {
     );
   }
 }
-
